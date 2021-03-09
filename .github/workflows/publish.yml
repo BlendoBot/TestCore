@@ -23,3 +23,4 @@ jobs:
           PROJECT_FILE_PATH: TestCore.csproj
           VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
           NUGET_KEY: ${{secrets.NUGET_KEY}}
+          TAG_COMMIT: false

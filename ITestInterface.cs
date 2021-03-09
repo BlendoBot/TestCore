@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace TestCore {
-	public class ITestInterface {
+	public interface ITestInterface {
 		public int MagicValue { get; }
 	}
 }
