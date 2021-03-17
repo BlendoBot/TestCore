@@ -1,0 +1,33 @@
+name: Automatically tag as a pre-release
+on:
+  push:
+    branches:
+      - master
+jobs:
+  autotag:
+    name: Auto-tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Compute next tag name
+        id: compute_tag
+        shell: pwsh
+        run: |
+          $lastTag = $(git describe --tags --abbrev=0)
+          $prefixTag = $($lastTag.Split('.') | Select-Object -SkipLast 1) -join '.'
+          $lastTerm = $lastTag.Split('.')[-1]
+          $intendedLastTerm = [int]$lastTerm + 1
+          if ($lastTag -match "-pre") {
+            $newTag = $prefixTag + "." + [string]$intendedLastTerm
+          } else {
+            $newTag = $prefixTag + "." + [string]$intendedLastTerm + "-pre.1"
+          }
+          Write-Output "::set-output name=tag_name::$newTag"
+        
+      - name: Auto-tag repo
+        uses: Klemensas/action-autotag@stable
+        with:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          version: "${{steps.compute_tag.outputs.tag_name}}"
