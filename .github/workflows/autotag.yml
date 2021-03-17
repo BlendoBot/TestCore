@@ -15,8 +15,8 @@ jobs:
         id: compute_tag
         shell: pwsh
         run: |
-          Get-Location
-          Get-ChildItem -Recurse
+          Write-Output $(Get-Location)
+          Write-Output $(Get-ChildItem -Recurse)
           $lastTag = $(git describe --tags --abbrev=0)
           $prefixTag = $($lastTag.Split('.') | Select-Object -SkipLast 1) -join '.'
           $lastTerm = $lastTag.Split('.')[-1]
