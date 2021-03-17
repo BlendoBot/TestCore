@@ -33,7 +33,7 @@ jobs:
           Write-Output "::set-output name=tag_name::$newTag"
         
       - name: Auto-tag repo
-        uses: Klemensas/action-autotag@stable
+        uses: tvdias/github-tagger@v0.0.1
         with:
-          GITHUB_TOKEN: ${{secrets.GIT_TOKEN}}
-          version: "${{steps.compute_tag.outputs.tag_name}}"
+          repo-token: ${{secrets.GIT_TOKEN}}
+          tag: "${{steps.compute_tag.outputs.tag_name}}"
