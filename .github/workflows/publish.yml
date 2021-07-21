@@ -24,7 +24,7 @@ jobs:
         shell: pwsh
         run: |
           dotnet restore
-          dotnet nuget add source --username BlendoBot --password ${{ github.token }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/BlendoBot/index.json"
+          dotnet nuget list source
           $version = (Select-String -Pattern "^\s*<Version>(.*)<\/Version>\s*$" -Path .\TestCore.csproj).Matches[0].Groups[1].Captures[0].Value
           dotnet pack --configuration Release
           dotnet nuget push ((Get-ChildItem ".\bin\Release\*.nupkg")[0].FullName) --api-key "${{ github.token }}" --source "github"
