@@ -19,15 +19,11 @@ jobs:
         env:
           NUGET_AUTH_TOKEN: ${{ github.token }}
 
-      - name: dotnet restore
-        run: dotnet restore
-
       - name: Publish NuGet Package
         id: publish_nuget
-        uses: rohith/publish-nuget@v2
-        with:
-          PROJECT_FILE_PATH: TestCore.csproj
-          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
-          NUGET_KEY: ${{ github.token }}
-          NUGET_SOURCE: https://nuget.pkg.github.com/${{ github.repository_owner }}
-          TAG_COMMIT: false
+        shell: pwsh
+        run: |
+          dotnet restore
+          $version = (Select-String -Pattern "^\s*<Version>(.*)<\/Version>\s*$" -Path .\TestCore.csproj).Matches[0].Groups[1].Captures[0].Value
+          dotnet pack --configuration Release
+          dotnet nuget push ((Get-ChildItem ".\bin\Release\*.nupkg")[0].FullName) --api-key "${{ github.token }}" --source "github"
