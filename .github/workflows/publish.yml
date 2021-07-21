@@ -29,5 +29,5 @@ jobs:
           PROJECT_FILE_PATH: TestCore.csproj
           VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
           NUGET_KEY: ${{ github.token }}
-          NUGET_SOURCE: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+          NUGET_SOURCE: https://nuget.pkg.github.com/${{ github.repository_owner }}
           TAG_COMMIT: false
