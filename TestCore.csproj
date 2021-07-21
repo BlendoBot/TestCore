@@ -6,6 +6,7 @@
     <Company>BlendoBot</Company>
     <PackageId>BlendoBot.TestCore</PackageId>
     <Version>1.0.1</Version>
+    <RepositoryUrl>https://github.com/BlendoBot/TestCore</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
